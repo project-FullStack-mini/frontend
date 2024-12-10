@@ -1,19 +1,23 @@
 import { useState } from "react";
-import "../Style.css"
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "../Style.css";
 
 export function Register() {
   const [data, setData] = useState({
     username: "",
-    email: "",
+    // email: "",
     password: "",
-    confirmPassword: "",
-    firstName: "",
-    lastName: "",
-    birthday: "",
-    phoneNumber: "",
-    gender: "",
-    address: "",
+    // confirmPassword: "",
+    // firstName: "",
+    // lastName: "",
+    // birthday: "",
+    // phoneNumber: "",
+    // gender: "",
+    // address: "",
   });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,9 +27,29 @@ export function Register() {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:3000/register";
+
+      await axios
+        .post("/register", data)
+        .then((res) => console.log(res))
+        .catch((e) => console.log(e));
+
+      // alert(res.Message);
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      setError("failed sending data to backend");
+    }
+  };
+
   return (
     <>
-      <form >
+      {error && <p>Fehler</p>}
+      <form onSubmit={handleSubmit}>
         <h1>Register</h1>
 
         {/* Username */}
@@ -38,7 +62,7 @@ export function Register() {
           required
         />
 
-        {/* Email */}
+        {/* Email
         <input
           type="email"
           placeholder="Email"
@@ -46,7 +70,7 @@ export function Register() {
           onChange={handleChange}
           value={data.email}
           required
-        />
+        /> */}
 
         {/* Password */}
         <input
@@ -58,8 +82,8 @@ export function Register() {
           required
         />
 
-        {/* Confirm Password */}
-        <input
+        {/* Confirm Password
+        {/* <input
           type="password"
           placeholder="Confirm Password"
           name="confirmPassword"
@@ -68,7 +92,7 @@ export function Register() {
           required
         />
 
-        {/* First Name */}
+  First Name
         <input
           type="text"
           placeholder="First Name"
@@ -78,7 +102,7 @@ export function Register() {
           required
         />
 
-        {/* Last Name */}
+       Last Name 
         <input
           type="text"
           placeholder="Last Name"
@@ -88,7 +112,7 @@ export function Register() {
           required
         />
 
-        {/* Birthday */}
+       Birthday
         <input
           type="date"
           placeholder="Birthday"
@@ -98,18 +122,18 @@ export function Register() {
           required
         />
 
-        {/* Phone Number */}
+        Phone Number 
         <input
           type="tel"
           placeholder="Phone Number"
           name="phoneNumber"
           onChange={handleChange}
           value={data.phoneNumber}
-          pattern="[0-9]{10}" /* Optional: to enforce 10-digit phone numbers */
+          pattern="[0-9]{10}" /* Optional: to enforce 10-digit phone numbers 
           required
         />
 
-        {/* Gender */}
+      Gender 
         <select
           name="gender"
           onChange={handleChange}
@@ -124,7 +148,7 @@ export function Register() {
           <option value="other">Other</option>
         </select>
 
-        {/* Address */}
+        Address 
         <textarea
           placeholder="Address"
           name="address"
@@ -132,7 +156,7 @@ export function Register() {
           value={data.address}
           rows="3"
           required
-        ></textarea>
+        ></textarea> */}
 
         {/* Submit Button */}
         <button type="submit">Register</button>

@@ -5,6 +5,10 @@ import axios from "axios";
 export function Login() {
   const [data, setData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const [check, setChecked] = useState(true);
+  const toggleVisibility = () => {
+    setChecked(!check);
+  };
   const navigate = useNavigate();
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -13,13 +17,13 @@ export function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "";
+      const url = "http://localhost:3000/login";
 
       const { data: res } = await axios.post(url, data);
+      console.log(res);
+      // alert(res.Message);
 
-      alert(res.Message);
-
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       console.log(error);
       setError("failed sending data to backend");
@@ -40,14 +44,19 @@ export function Login() {
               value={data.username}
               required
             />{" "}
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={handleChange}
-              value={data.password}
-              required
-            />
+            <div>
+              <input
+                type={check ? "password" : "text"}
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                value={data.password}
+                required
+              />
+              <button type="button" onClick={toggleVisibility}>
+                {check ? "show password" : "hide password"}
+              </button>
+            </div>
             <button type="submit">Submit</button>
           </form>
         </div>
