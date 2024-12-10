@@ -1,23 +1,24 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Style.css";
 
 export function Register() {
   const [data, setData] = useState({
-    username: "",
-    // email: "",
+    email: "",
     password: "",
-    // confirmPassword: "",
-    // firstName: "",
-    // lastName: "",
-    // birthday: "",
-    // phoneNumber: "",
-    // gender: "",
-    // address: "",
   });
+  // username: "",
+  // confirmPassword: "",
+  // firstName: "",
+  // lastName: "",
+  // birthday: "",
+  // phoneNumber: "",
+  // gender: "",
+  // address: ""
+
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,15 +32,12 @@ export function Register() {
     e.preventDefault();
     try {
       const url = "http://localhost:3000/register";
-
-      await axios
-        .post("/register", data)
-        .then((res) => console.log(res))
-        .catch((e) => console.log(e));
-
+      console.log("Sending data:", data); 
+      const res = await axios.post(url, data)//.catch((e) => console.log(e));
+console.log("BACKENDRESPOND:", res)
       // alert(res.Message);
 
-      navigate("/");
+      // navigate("/");
     } catch (error) {
       console.log(error);
       setError("failed sending data to backend");
@@ -48,21 +46,11 @@ export function Register() {
 
   return (
     <>
-      {error && <p>Fehler</p>}
+      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
         <h1>Register</h1>
 
-        {/* Username */}
-        <input
-          type="text"
-          placeholder="Username"
-          name="username"
-          onChange={handleChange}
-          value={data.username}
-          required
-        />
-
-        {/* Email
+        {/* Email */}
         <input
           type="email"
           placeholder="Email"
@@ -70,7 +58,7 @@ export function Register() {
           onChange={handleChange}
           value={data.email}
           required
-        /> */}
+        />
 
         {/* Password */}
         <input
@@ -82,8 +70,18 @@ export function Register() {
           required
         />
 
-        {/* Confirm Password
-        {/* <input
+        {/* Username 
+        <input
+          type="text"
+          placeholder="Email"
+          name="email"
+          onChange={handleChange}
+          value={data.username}
+          required
+        />
+        
+         Confirm Password
+        <input
           type="password"
           placeholder="Confirm Password"
           name="confirmPassword"
@@ -92,7 +90,7 @@ export function Register() {
           required
         />
 
-  First Name
+        First Name
         <input
           type="text"
           placeholder="First Name"
