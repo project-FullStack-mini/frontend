@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../Style.css
 
 export function Login() {
   const [data, setData] = useState({ username: "", password: "" });
